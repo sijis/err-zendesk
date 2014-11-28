@@ -17,9 +17,9 @@ class Zendesk(BotPlugin):
 
     @botcmd(split_args_with=" ")
     def zendesk(self, msg, args):
-        """<id>
-
-        Returns the subject of the ticket along with a link to it.
+        """ Returns the subject of the ticket along with a link to it.
+        Example:
+            !zendesk <id>
         """
 
         ticket = args.pop(0)
