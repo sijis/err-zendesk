@@ -2,6 +2,7 @@ from errbot import BotPlugin, botcmd
 
 import requests
 
+
 class Zendesk(BotPlugin):
     """Plugin for Zendesk"""
 
@@ -41,11 +42,12 @@ class Zendesk(BotPlugin):
             data = req.json()
             user = self._get_name_by_id(data['ticket']['assignee_id'])
             response = '{0} created on {1} by {2} ({4}) - {3}'.format(
-                                    data['ticket']['subject'],
-                                    data['ticket']['created_at'],
-                                    user,
-                                    display_url,
-                                    data['ticket']['status'])
+                data['ticket']['subject'],
+                data['ticket']['created_at'],
+                user,
+                display_url,
+                data['ticket']['status']
+            )
         else:
             response = 'Id {0} not found.'.format(ticket)
 
@@ -61,4 +63,3 @@ class Zendesk(BotPlugin):
         req = requests.get(url, auth=(username, password))
         data = req.json()
         return data['user']['name']
-        
