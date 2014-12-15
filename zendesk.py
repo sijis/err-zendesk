@@ -1,7 +1,12 @@
 from errbot import BotPlugin, botcmd
+import logging
 
-import requests
+log = logging.getLogger(name='errbot.plugins.Zendesk')
 
+try:
+    import requests
+except ImportError:
+    log.error("Please install 'requests' python package")
 
 class Zendesk(BotPlugin):
     """Plugin for Zendesk"""
