@@ -56,7 +56,11 @@ class Zendesk(BotPlugin):
         else:
             response = 'Id {0} not found.'.format(ticket)
 
-        yield response
+        self.send(msg.frm,
+                  response,
+                  message_type=msg.type,
+                  in_reply_to=msg,
+                  groupchat_nick_reply=True)
 
     def _get_name_by_id(self, id):
 
