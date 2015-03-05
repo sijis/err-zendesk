@@ -42,6 +42,8 @@ class Zendesk(BotPlugin):
         display_url = '{0}/tickets/{1}'.format(domain, ticket)
         req = requests.get(url, auth=(username, password))
 
+        log.debug('ticket url: {}'.format(url))
+
         if req.status_code == requests.codes.ok:
 
             data = req.json()
@@ -69,6 +71,9 @@ class Zendesk(BotPlugin):
         api_url = self.config['api_url']
 
         url = '{0}/users/{1}.json'.format(api_url, id)
+
+        log.debug('user url: {}'.format(url))
+
         req = requests.get(url, auth=(username, password))
         data = req.json()
         return data['user']['name']
