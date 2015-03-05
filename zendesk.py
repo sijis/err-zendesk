@@ -30,7 +30,11 @@ class Zendesk(BotPlugin):
 
         ticket = args.pop(0)
         if ticket == '':
-            yield "id required"
+            self.send(msg.frm,
+                      'id is required',
+                      message_type=msg.type,
+                      in_reply_to=msg,
+                      groupchat_nick_reply=True)
             return
 
         username = self.config['api_user']
