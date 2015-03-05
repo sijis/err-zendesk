@@ -45,7 +45,7 @@ class Zendesk(BotPlugin):
         if req.status_code == requests.codes.ok:
 
             data = req.json()
-            user = self._get_name_by_id(data['ticket']['assignee_id'])
+            user = self._get_name_by_id(data['ticket']['requester_id'])
             response = '{0} created on {1} by {2} ({4}) - {3}'.format(
                 data['ticket']['subject'],
                 data['ticket']['created_at'],
