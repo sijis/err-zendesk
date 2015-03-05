@@ -51,13 +51,23 @@ class Zendesk(BotPlugin):
         if req.status_code == requests.codes.ok:
 
             data = req.json()
-            user = self._get_name_by_id(data['ticket']['requester_id'])
-            response = '{0} created on {1} by {2} ({4}) - {3}'.format(
+            requester_user = self._get_name_by_id(data['ticket']['requester_id'])
+
+
+            # This is a cases where a ticket is created but not assigned
+            assignee_id = data['ticket']['assignee_id']
+            if assignee_id is None:
+                assignee_user = 'Unassigned'
+            else:
+                assignee_user = self._get_name_by_id(data['ticket']['assignee_id'])
+
+            response = '{0} created by {2} on {1}. Assigned: {5}, Status: {4} - {3}'.format(
                 data['ticket']['subject'],
                 data['ticket']['created_at'],
-                user,
+                requester_user,
                 display_url,
-                data['ticket']['status']
+                data['ticket']['status'],
+                assignee_user
             )
         else:
             response = 'Id {0} not found.'.format(ticket)
@@ -80,4 +90,5 @@ class Zendesk(BotPlugin):
 
         req = requests.get(url, auth=(username, password))
         data = req.json()
+
         return data['user']['name']
